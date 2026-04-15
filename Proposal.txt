@@ -1,29 +1,29 @@
-Project 4 Proposal - Proposal Group 3
-You will narrow down your synthesis report (or one aspect of your report) and create a piece of public writing that will help inform a general audience and raise awareness about your problem. I suggest you start by discussing the research you uncovered this last month. What did you learn that was surprising? What do you want other members of your community to know more about?
-
-Submit the following as a discussion post.
-
-Use the following template: 
-
-TOPIC OVERVIEW: 
-
-PROPOSED GENRE/PLATFORM: Links to an external site.
-
-AUDIENCE:  
-
-CITATION STYLE FOR THE REPORT: 
-
-WORK PLAN: 
-
-
-
 Reply from Kevin Lu
-TOPIC OVERVIEW: The most surprising finding from my research was that the Pentagon blacklisted Anthropic for refusing to remove two safety restrictions (mass domestic surveillance and fully autonomous weapons), and then hours later signed a deal with OpenAI that included essentially the same restrictions. That sequence of events suggests the dispute was never really about the safeguards themselves but about establishing the principle that when the government buys your technology, you don't get to set conditions. I want a general audience to understand what happened, why it matters for civil liberties, and why we need federal legislation governing military AI so that these questions don't come down to contract negotiations between a handful of CEOs and whoever is running the Pentagon.
 
-PROPOSED GENRE/PLATFORM: Op-ed, formatted for a general-interest tech publication like The Verge or a university newspaper. I'm thinking something in the range of 800-1200 words that leads with the concrete irony of the Anthropic/OpenAI sequence and builds toward the policy argument.
+PROJECT 4:
+The Safety Standoff: Anthropic, the Pentagon, and Military AI
+https://kevinlu4588.github.io/llm-war-explainer/
 
-AUDIENCE: General public, especially people who follow tech news but haven't looked closely at the details of this dispute. The kind of reader who saw the headlines about Anthropic vs. the Pentagon but doesn't know that OpenAI got the same safeguards days later.
+TOPIC OVERVIEW:
 
-CITATION STYLE FOR THE REPORT: Informal in-text attribution typical of op-eds, weaving source names and context into the prose rather than using formal parenthetical citations.
+My synthesis report covered the Anthropic-Pentagon dispute of February-March 2026. The most surprising finding was that the Pentagon blacklisted Anthropic for refusing to remove two safety restrictions, then hours later signed a deal with OpenAI that included essentially the same restrictions. That contradiction suggests the dispute was never about the safeguards themselves but about who gets to set conditions when the government buys AI. For this project, I want a general audience to understand the timeline, the legal stakes, and why federal legislation on military AI is needed.
 
-WORK PLAN: I plan to write an op-ed that walks readers through the timeline of the dispute, highlights the contradiction in how Anthropic and OpenAI were treated, and argues that the real problem is the absence of federal legislation on military AI. I may include one supporting visual, either a side-by-side comparison of Anthropic's and OpenAI's contract terms or a timeline of the key events.
+PROPOSED GENRE/PLATFORM:
+
+Interactive editorial website, modeled after long-form visual storytelling pieces from outlets like The Verge or NYT interactive. The site includes an interactive timeline, side-by-side comparison graphics, a legal flowchart, and a UN vote visualization to make the story more accessible and engaging than a traditional essay.
+
+AUDIENCE:
+
+General public, especially people who follow tech news but haven't looked closely at the details of this dispute. The kind of reader who saw the headlines about Anthropic vs. the Pentagon but doesn't know that OpenAI got the same safeguards days later, or that a federal judge called the government's actions "Orwellian."
+
+CITATION STYLE FOR THE REPORT:
+
+Informal in-text attribution woven into the prose, with a full references section at the bottom of the page listing all 10 sources in APA format.
+
+WORK PLAN:
+
+Week 1: Identify the key narrative threads from the synthesis report and outline the sections and interactive figures for the site.
+
+Week 2: Build the website structure, write all prose content, and implement the four interactive visualizations (timeline, comparison panel, legal flowchart, UN vote waffle chart).
+
+Remaining time: Polish visual design, test interactivity, add dark mode and accessibility features, revise prose for a general audience.
