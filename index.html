@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Safety Standoff - Anthropic, the Pentagon, and the Fight Over Military AI</title>
+<meta name="description" content="How Anthropic was punished for the same AI safety restrictions the Pentagon accepted from OpenAI - and what it means for the future of military AI.">
+<meta property="og:title" content="The Safety Standoff">
+<meta property="og:description" content="Anthropic vs. the Pentagon: the dispute that exposed the absence of federal rules on military AI.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F2F0EB;--bg-alt:#E8E6E1;--text:#0f172a;--text-secondary:#475569;
+  --col-width:680px;--graphic-width:min(960px,94vw);
+  --anthropic:#1C6DD0;--pentagon:#B91C1C;--openai:#10A37F;--court:#166534;
+  --industry:#D97706;--accent:#C2410C;
+  --header-bg:#1C2E4A;--header-text:#F1F5F9;
+  --card-bg:#fff;--card-border:#e2e0db;
+  --serif:'Source Serif 4',Georgia,serif;
+  --display:'Syne',sans-serif;
+  color-scheme:light dark;
+}
+.dark{
+  --bg:#0f172a;--bg-alt:#1e293b;--text:#e2e8f0;--text-secondary:#94a3b8;
+  --header-bg:#0c1929;--card-bg:#1e293b;--card-border:#334155;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--serif);font-weight:300;font-size:1.0625rem;
+  line-height:1.82;color:var(--text);background:var(--bg);
+  transition:background .3s,color .3s;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--anthropic);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{text-decoration-thickness:2px}
+img,svg{max-width:100%;display:block}
+
+/* ── Skip Link ────────────────────────────────── */
+.skip-link{
+  position:absolute;top:-100%;left:1rem;background:var(--accent);color:#fff;
+  padding:.5rem 1rem;border-radius:4px;z-index:9999;font-family:var(--display);
+  font-size:.875rem;text-decoration:none;
+}
+.skip-link:focus{top:1rem}
+
+/* ── Progress Bar ─────────────────────────────── */
+.progress-bar{
+  position:fixed;top:0;left:0;height:3px;background:var(--accent);
+  width:0%;z-index:1000;transition:width .1s linear;
+}
+
+/* ── Dark Mode Toggle ─────────────────────────── */
+.dm-toggle{
+  position:fixed;top:12px;right:16px;z-index:999;
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:50%;width:38px;height:38px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;box-shadow:0 1px 4px rgba(0,0,0,.1);
+  transition:background .3s,border-color .3s;
+}
+.dm-toggle:hover{border-color:var(--accent)}
+
+/* ── Header ───────────────────────────────────── */
+header{
+  background:var(--header-bg);color:var(--header-text);
+  padding:5rem 1.5rem 4rem;text-align:center;
+}
+header h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.05;
+  margin-bottom:1rem;letter-spacing:-.02em;
+}
+header .subtitle{
+  font-size:clamp(1rem,2.5vw,1.25rem);font-weight:300;
+  max-width:600px;margin:0 auto 1.5rem;line-height:1.5;
+  opacity:.88;
+}
+header .byline{
+  font-family:var(--display);font-size:.8rem;font-weight:400;
+  letter-spacing:.06em;text-transform:uppercase;opacity:.6;
+}
+
+/* ── Main Column ──────────────────────────────── */
+main{max-width:var(--col-width);margin:0 auto;padding:3rem 1.5rem 5rem}
+section{margin-bottom:3.5rem}
+h2{
+  font-family:var(--display);font-weight:700;font-size:1.65rem;
+  line-height:1.15;margin-bottom:1.2rem;letter-spacing:-.01em;
+}
+h3{
+  font-family:var(--display);font-weight:600;font-size:1.15rem;
+  margin-bottom:.8rem;
+}
+p{margin-bottom:1.6rem}
+strong{font-weight:600}
+
+/* ── Graphic Breakout ─────────────────────────── */
+.graphic{
+  width:var(--graphic-width);
+  margin:2.5rem calc((100% - var(--graphic-width)) / 2);
+}
+.graphic figcaption{
+  font-family:var(--display);font-size:.75rem;font-weight:400;
+  color:var(--text-secondary);text-align:center;margin-top:.75rem;
+  letter-spacing:.03em;text-transform:uppercase;
+}
+
+/* ── Blockquote ───────────────────────────────── */
+blockquote{
+  border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1.5rem;
+  margin:2rem 0;font-style:italic;color:var(--text-secondary);
+}
+blockquote cite{
+  display:block;font-style:normal;font-family:var(--display);
+  font-size:.78rem;margin-top:.5rem;letter-spacing:.02em;
+  color:var(--text-secondary);opacity:.8;
+}
+
+/* ── Pull Quote ───────────────────────────────── */
+.pull-quote{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.35;
+  text-align:center;padding:2.5rem 1rem;margin:3rem 0;
+  border-top:2px solid var(--accent);border-bottom:2px solid var(--accent);
+  color:var(--text);
+}
+
+/* ── Section Label ────────────────────────────── */
+.section-label{
+  font-family:var(--display);font-size:.7rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
+  margin-bottom:.5rem;display:block;
+}
+
+/* ── Fade-In Animation ────────────────────────── */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(prefers-reduced-motion:reduce){
+  .fade-in{opacity:1;transform:none;transition:none}
+}
+
+/* ═══════════════════════════════════════════════
+   FIGURE 1 - TIMELINE
+   ═══════════════════════════════════════════════ */
+.timeline{padding:1rem 0}
+.tl-event{
+  display:grid;grid-template-columns:1fr 28px 1fr;gap:0;
+  position:relative;min-height:80px;
+}
+.tl-event:not(:last-child) .tl-spine::after{
+  content:'';position:absolute;top:28px;left:50%;width:2px;
+  height:calc(100% - 14px);background:var(--card-border);
+  transform:translateX(-50%);
+}
+.tl-spine{
+  position:relative;display:flex;align-items:flex-start;
+  justify-content:center;padding-top:6px;
+}
+.tl-dot{
+  width:14px;height:14px;border-radius:50%;z-index:1;flex-shrink:0;
+  border:2px solid var(--bg);box-shadow:0 0 0 2px currentColor;
+  background:currentColor;transition:transform .2s;
+}
+.tl-event:hover .tl-dot{transform:scale(1.3)}
+.tl-content-left,.tl-content-right{padding:.25rem .75rem 1.5rem}
+.tl-content-left{text-align:right}
+.tl-date{
+  font-family:var(--display);font-size:.72rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);
+}
+.tl-title{
+  font-family:var(--display);font-weight:700;font-size:.95rem;
+  line-height:1.25;margin:.2rem 0;
+}
+.tl-summary{font-size:.85rem;line-height:1.55;color:var(--text-secondary)}
+.tl-detail{
+  max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;
+  opacity:0;font-size:.82rem;line-height:1.6;color:var(--text-secondary);
+  margin-top:.3rem;
+}
+.tl-event.open .tl-detail{max-height:300px;opacity:1}
+.tl-toggle{
+  font-family:var(--display);font-size:.68rem;font-weight:600;
+  color:var(--accent);cursor:pointer;background:none;border:none;
+  padding:.2rem 0;letter-spacing:.04em;text-transform:uppercase;
+}
+.tl-toggle:hover{text-decoration:underline}
+.tl-content-left .tl-toggle{direction:rtl}
+
+/* Mobile timeline */
+@media(max-width:600px){
+  .tl-event{grid-template-columns:28px 1fr}
+  .tl-content-left{display:none}
+  .tl-content-right{text-align:left}
+}
+
+/* ═══════════════════════════════════════════════
+   FIGURE 2 - COMPARISON PANEL
+   ═══════════════════════════════════════════════ */
+.compare-panel{
+  display:grid;grid-template-columns:1fr 1px 1fr;
+  background:var(--card-bg);border-radius:8px;
+  border:1px solid var(--card-border);overflow:hidden;
+  transition:background .3s,border-color .3s;
+}
+.compare-col{padding:1.5rem}
+.compare-col h3{
+  font-family:var(--display);font-weight:700;font-size:.95rem;
+  margin-bottom:.3rem;
+}
+.compare-col .col-tag{
+  font-family:var(--display);font-size:.65rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  display:inline-block;padding:.15rem .5rem;border-radius:3px;
+  margin-bottom:1rem;
+}
+.tag-rejected{background:#FEE2E2;color:var(--pentagon)}
+.tag-accepted{background:#DCFCE7;color:var(--court)}
+.dark .tag-rejected{background:#450a0a;color:#fca5a5}
+.dark .tag-accepted{background:#052e16;color:#86efac}
+.compare-divider{background:var(--card-border)}
+.compare-col ul{list-style:none;padding:0}
+.compare-col li{
+  padding:.6rem .75rem;border-radius:5px;margin-bottom:.5rem;
+  font-size:.88rem;line-height:1.5;transition:background .4s,box-shadow .4s;
+  position:relative;
+}
+.compare-col li .match-icon{
+  display:none;margin-left:.4rem;font-style:normal;
+}
+.compare-col li.highlighted{
+  background:#FEF3C7;box-shadow:inset 3px 0 0 var(--industry);
+}
+.dark .compare-col li.highlighted{background:#422006}
+.compare-col li.highlighted .match-icon{display:inline}
+.reveal-btn{
+  display:block;margin:1.25rem auto 0;font-family:var(--display);
+  font-size:.8rem;font-weight:600;padding:.55rem 1.4rem;
+  background:var(--accent);color:#fff;border:none;border-radius:5px;
+  cursor:pointer;letter-spacing:.03em;transition:background .2s;
+}
+.reveal-btn:hover{background:#9a3412}
+.reveal-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:600px){
+  .compare-panel{grid-template-columns:1fr;gap:0}
+  .compare-divider{height:1px;width:100%}
+}
+
+/* ═══════════════════════════════════════════════
+   FIGURE 3 - LEGAL FLOWCHART
+   ═══════════════════════════════════════════════ */
+.flowchart svg{width:100%;height:auto}
+.flowchart text{font-family:var(--display)}
+.fc-node{rx:6;ry:6;stroke-width:1.5;transition:opacity .3s}
+.fc-label{font-size:11px;font-weight:600;fill:var(--text);pointer-events:none}
+.fc-sublabel{font-size:9px;fill:var(--text-secondary);pointer-events:none}
+.fc-arrow{fill:none;stroke-width:1.5;stroke-dasharray:6 4}
+@media(prefers-reduced-motion:no-preference){
+  .fc-arrow{animation:fc-flow 1.8s linear infinite}
+}
+@keyframes fc-flow{to{stroke-dashoffset:-20}}
+
+/* ═══════════════════════════════════════════════
+   FIGURE 4 - WAFFLE CHART
+   ═══════════════════════════════════════════════ */
+.waffle-grid{
+  display:grid;grid-template-columns:repeat(13,1fr);
+  gap:3px;max-width:420px;margin:0 auto;
+}
+.waffle-cell{
+  aspect-ratio:1;border-radius:2px;cursor:default;
+  transition:transform .15s;position:relative;
+}
+.waffle-cell:hover{transform:scale(1.35);z-index:2}
+.waffle-cell.vote-yes{background:var(--court)}
+.waffle-cell.vote-no{background:var(--pentagon)}
+.waffle-tooltip{
+  position:absolute;bottom:calc(100% + 6px);left:50%;
+  transform:translateX(-50%);background:var(--text);color:var(--bg);
+  font-family:var(--display);font-size:.65rem;font-weight:600;
+  padding:.2rem .5rem;border-radius:3px;white-space:nowrap;
+  pointer-events:none;opacity:0;transition:opacity .15s;z-index:10;
+}
+.waffle-cell:hover .waffle-tooltip{opacity:1}
+.waffle-legend{
+  display:flex;justify-content:center;gap:1.5rem;margin-top:1rem;
+  font-family:var(--display);font-size:.75rem;color:var(--text-secondary);
+}
+.waffle-legend span{display:flex;align-items:center;gap:.35rem}
+.legend-swatch{width:12px;height:12px;border-radius:2px;display:inline-block}
+.legend-yes{background:var(--court)}
+.legend-no{background:var(--pentagon)}
+
+/* ── Sources ──────────────────────────────────── */
+.sources{
+  border-top:1px solid var(--card-border);padding-top:2rem;margin-top:4rem;
+}
+.sources ol{padding-left:1.2rem}
+.sources li{
+  font-size:.85rem;line-height:1.65;margin-bottom:.8rem;
+  color:var(--text-secondary);
+}
+.sources li a{word-break:break-all}
+
+/* ── Footer ───────────────────────────────────── */
+footer{
+  text-align:center;padding:2rem 1.5rem 3rem;
+  font-family:var(--display);font-size:.72rem;
+  color:var(--text-secondary);letter-spacing:.04em;
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media(max-width:600px){
+  header{padding:3.5rem 1.25rem 3rem}
+  main{padding:2rem 1.25rem 4rem}
+  h2{font-size:1.4rem}
+  .pull-quote{font-size:1.1rem;padding:2rem .75rem}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="progress-bar" role="progressbar" aria-label="Reading progress"></div>
+<button class="dm-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">☀️</button>
+
+<!-- ════════════════════════════════════════════
+     HEADER
+     ════════════════════════════════════════════ -->
+<header>
+  <h1>The Safety Standoff</h1>
+  <p class="subtitle">Anthropic was punished for demanding AI safety restrictions the Pentagon quietly accepted from OpenAI days later. This is the story of that contradiction - and why it matters.</p>
+  <p class="byline">Kevin Lu &middot; Northeastern University &middot; April 2026</p>
+</header>
+
+<!-- ════════════════════════════════════════════
+     MAIN CONTENT
+     ════════════════════════════════════════════ -->
+<main id="main">
+
+<!-- ── Introduction ────────────────────────────── -->
+<section class="fade-in">
+  <span class="section-label">Introduction</span>
+  <h2>One Company Punished, Another Rewarded - for the Same Thing</h2>
+  <p>In late February 2026, the U.S. Department of Defense and Anthropic, the AI company behind the chatbot Claude, had a very public falling out. The core issue was simple: Anthropic did not want Claude used for mass domestic surveillance or in fully autonomous weapons, and the Pentagon wanted the right to use it for "all lawful purposes" with no restrictions.</p>
+  <p>When Anthropic refused to back down, the government canceled its $200 million contract, designated the company a "supply chain risk" - a label normally reserved for foreign adversaries like Russia and China - and ordered every federal agency to stop using Anthropic's products. Then, just hours later, OpenAI announced it had signed its own classified-network deal with the Pentagon that included essentially the same prohibitions Anthropic was punished for demanding.</p>
+  <p>The dispute has since escalated into active litigation, with Anthropic filing two federal lawsuits alleging that the government retaliated against the company for its speech on AI safety. This story touches on civil liberties, the legal limits of executive power, the role of AI in warfare, and whether a private company can set ethical conditions on technology it sells to the military.</p>
+</section>
+
+<!-- ── Timeline ────────────────────────────────── -->
+<section class="fade-in">
+  <span class="section-label">Timeline</span>
+  <h2>Four Weeks That Shook the AI Industry</h2>
+  <p>What started as a contract dispute between one company and the Pentagon quickly became the most significant confrontation between the tech industry and the U.S. government since the Snowden revelations. Here is how it unfolded.</p>
+</section>
+
+<figure class="graphic fade-in" role="figure" aria-label="Timeline of the Anthropic–Pentagon dispute, February to March 2026">
+  <div class="timeline" id="timeline"></div>
+  <figcaption>Figure 1 - Key events in the Anthropic–Pentagon dispute, Feb 24 – Mar 24, 2026</figcaption>
+</figure>
+
+<!-- ── The Confrontation ──────────────────────── -->
+<section class="fade-in">
+  <span class="section-label">The Confrontation</span>
+  <h2>An Ultimatum From the Pentagon</h2>
+  <p>On February 24, Defense Secretary Pete Hegseth called Anthropic CEO Dario Amodei to the Pentagon and delivered an ultimatum: drop all restrictions on how the military can use Claude by Friday at 5:01 PM, or face consequences that could include being forced to cooperate under the Defense Production Act - a Korean War-era statute normally used to compel production of physical goods like steel and ammunition.</p>
+  <p>Amodei refused. In a public statement two days later, he laid out Anthropic's two red lines and the reasoning behind each.</p>
+  <blockquote>
+    On surveillance: current law has not caught up with AI's capabilities. The government can already buy Americans' location data, browsing history, and financial records from data brokers without a warrant. AI makes it possible to take all of that scattered information and automatically assemble it into a detailed profile of any individual at massive scale.
+    <cite>- Dario Amodei, CEO of Anthropic, February 26, 2026</cite>
+  </blockquote>
+  <p>On autonomous weapons, Amodei's argument was more technical: frontier AI models are simply not reliable enough to make life-or-death targeting decisions without a human in the loop. He also pointed out a contradiction in the government's position - one arm calling Anthropic a security risk while another insisted Claude was essential to national security.</p>
+</section>
+
+<!-- ── The Contradiction ──────────────────────── -->
+<section class="fade-in">
+  <span class="section-label">The Contradiction</span>
+  <h2>Same Safeguards, Different Outcomes</h2>
+  <p>Hours after Anthropic was blacklisted, OpenAI published a blog post describing its new Pentagon contract. The deal included three explicit prohibitions: no mass domestic surveillance, no directing autonomous weapons, and no social credit-type systems. OpenAI also said it asked the Pentagon to offer the same terms to all AI labs, including Anthropic.</p>
+  <p>The overlap is striking. Compare the two companies' positions side by side.</p>
+</section>
+
+<figure class="graphic fade-in" role="figure" aria-label="Side-by-side comparison of Anthropic and OpenAI contract terms">
+  <div class="compare-panel" id="compare-panel">
+    <div class="compare-col">
+      <h3 style="color:var(--anthropic)">Anthropic's Red Lines</h3>
+      <span class="col-tag tag-rejected">Rejected by Pentagon</span>
+      <ul>
+        <li data-match="surveillance">No mass domestic surveillance of American citizens</li>
+        <li data-match="weapons">No deployment in fully autonomous weapons without human oversight</li>
+      </ul>
+    </div>
+    <div class="compare-divider"></div>
+    <div class="compare-col">
+      <h3 style="color:var(--openai)">OpenAI's Prohibitions</h3>
+      <span class="col-tag tag-accepted">Accepted by Pentagon</span>
+      <ul>
+        <li data-match="surveillance">No mass domestic surveillance <em class="match-icon">⬅ match</em></li>
+        <li data-match="weapons">No directing autonomous weapons <em class="match-icon">⬅ match</em></li>
+        <li>No social credit-type scoring systems</li>
+      </ul>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:1rem">
+    <button class="reveal-btn" id="reveal-btn">Reveal the Overlap</button>
+  </div>
+  <figcaption>Figure 2 - Anthropic's two red lines vs. OpenAI's three prohibitions. The core restrictions are identical.</figcaption>
+</figure>
+
+<section class="fade-in">
+  <p>If the Pentagon accepted these safeguards from OpenAI, then the dispute with Anthropic was never really about the safeguards themselves. It was about who gets to set conditions. Sam Altman later admitted the OpenAI deal was rushed and acknowledged it looked "opportunistic and sloppy." The contract language actually went through revisions after legal experts found that the initial wording left loopholes around commercially acquired data.</p>
+  <div class="pull-quote">If the Pentagon accepted these safeguards from OpenAI, then the dispute with Anthropic was never really about the safeguards themselves. It was about who gets to set conditions.</div>
+</section>
+
+<!-- ── The Legal Battle ────────────────────────── -->
+<section class="fade-in">
+  <span class="section-label">The Legal Battle</span>
+  <h2>From Contract Dispute to Constitutional Fight</h2>
+  <p>The legal situation is messier than either side would probably like to admit. The Defense Production Act is a Korean War-era statute that was built for physical goods like steel and aluminum, not disputes about software safety features.</p>
+  <blockquote>
+    There is a useful distinction between two different things the government might demand: dropping the contractual usage restrictions on Claude - legally contested but arguably within the DPA's reach - versus forcing Anthropic to retrain the model to remove its safety behavior, which starts to look like demanding a product the company doesn't make.
+    <cite>- Alan Z. Rozenshtein, law professor and former DOJ attorney, writing in Lawfare</cite>
+  </blockquote>
+  <p>Rozenshtein's biggest takeaway is that this entire conflict exists because Congress has never passed legislation setting rules for how the military can use AI. So the question of whether the Pentagon can use Claude for mass surveillance comes down to whoever happens to be running the Department of Defense at the time.</p>
+  <p>Internal Pentagon records later revealed that Anthropic was designated a supply chain risk not because of any legitimate security concern, but because of its "hostile manner through the press" - in other words, for speaking publicly about AI safety.</p>
+  <p>On March 9, Anthropic took the fight to court, filing two federal lawsuits: one in San Francisco and another in the D.C. Circuit Court of Appeals. The suits argue the supply chain risk label was illegal retaliation for Anthropic's protected speech about AI safety, not a legitimate national security determination.</p>
+</section>
+
+<figure class="graphic fade-in" role="figure" aria-label="Legal pathway flowchart showing the progression from DPA threat to court hearing">
+  <div class="flowchart" id="flowchart">
+    <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Legal pathway flowchart">
+      <!-- Row 1 -->
+      <rect class="fc-node" x="20" y="20" width="160" height="56" fill="#FEE2E2" stroke="var(--pentagon)"/>
+      <text class="fc-label" x="100" y="44" text-anchor="middle">DPA Threat</text>
+      <text class="fc-sublabel" x="100" y="60" text-anchor="middle">Feb 24 - Pentagon</text>
+
+      <rect class="fc-node" x="240" y="20" width="160" height="56" fill="#FEE2E2" stroke="var(--pentagon)"/>
+      <text class="fc-label" x="320" y="44" text-anchor="middle">Contract Canceled</text>
+      <text class="fc-sublabel" x="320" y="60" text-anchor="middle">Feb 27 - $200M lost</text>
+
+      <rect class="fc-node" x="460" y="20" width="180" height="56" fill="#FEE2E2" stroke="var(--pentagon)"/>
+      <text class="fc-label" x="550" y="44" text-anchor="middle">Supply Chain Risk Label</text>
+      <text class="fc-sublabel" x="550" y="60" text-anchor="middle">Feb 27 - Blacklisted</text>
+
+      <rect class="fc-node" x="700" y="20" width="180" height="56" fill="#DBEAFE" stroke="var(--anthropic)"/>
+      <text class="fc-label" x="790" y="44" text-anchor="middle">Anthropic Lawsuits</text>
+      <text class="fc-sublabel" x="790" y="60" text-anchor="middle">Mar 9 - Two courts</text>
+
+      <!-- Row 2 -->
+      <rect class="fc-node" x="240" y="140" width="180" height="56" fill="#FEF3C7" stroke="var(--industry)"/>
+      <text class="fc-label" x="330" y="164" text-anchor="middle">Industry Amicus Briefs</text>
+      <text class="fc-sublabel" x="330" y="180" text-anchor="middle">Mar 16 - Tech groups</text>
+
+      <rect class="fc-node" x="480" y="140" width="180" height="56" fill="#DCFCE7" stroke="var(--court)"/>
+      <text class="fc-label" x="570" y="164" text-anchor="middle">Court Hearing</text>
+      <text class="fc-sublabel" x="570" y="180" text-anchor="middle">Mar 24 - Temporary relief</text>
+
+      <rect class="fc-node" x="720" y="140" width="160" height="56" fill="#DCFCE7" stroke="var(--court)"/>
+      <text class="fc-label" x="800" y="164" text-anchor="middle">Injunction Granted</text>
+      <text class="fc-sublabel" x="800" y="180" text-anchor="middle">Mar 26 - Ban blocked</text>
+
+      <!-- Arrows Row 1 -->
+      <path class="fc-arrow" stroke="var(--pentagon)" d="M180,48 L240,48"/>
+      <polygon fill="var(--pentagon)" points="237,44 245,48 237,52"/>
+      <path class="fc-arrow" stroke="var(--pentagon)" d="M400,48 L460,48"/>
+      <polygon fill="var(--pentagon)" points="457,44 465,48 457,52"/>
+      <path class="fc-arrow" stroke="var(--anthropic)" d="M640,48 L700,48"/>
+      <polygon fill="var(--anthropic)" points="697,44 705,48 697,52"/>
+
+      <!-- Arrows down and across -->
+      <path class="fc-arrow" stroke="var(--anthropic)" d="M790,76 L790,108 L330,108 L330,140"/>
+      <polygon fill="var(--anthropic)" points="326,137 330,145 334,137"/>
+
+      <path class="fc-arrow" stroke="var(--industry)" d="M420,168 L480,168"/>
+      <polygon fill="var(--industry)" points="477,164 485,168 477,172"/>
+
+      <path class="fc-arrow" stroke="var(--court)" d="M660,168 L720,168"/>
+      <polygon fill="var(--court)" points="717,164 725,168 717,172"/>
+
+      <!-- Legend -->
+      <circle cx="30" cy="235" r="5" fill="var(--pentagon)"/>
+      <text class="fc-sublabel" x="42" y="239">Pentagon action</text>
+      <circle cx="170" cy="235" r="5" fill="var(--anthropic)"/>
+      <text class="fc-sublabel" x="182" y="239">Anthropic action</text>
+      <circle cx="310" cy="235" r="5" fill="var(--industry)"/>
+      <text class="fc-sublabel" x="322" y="239">Industry support</text>
+      <circle cx="440" cy="235" r="5" fill="var(--court)"/>
+      <text class="fc-sublabel" x="452" y="239">Court proceedings</text>
+    </svg>
+  </div>
+  <figcaption>Figure 3 - Legal pathway from Pentagon threat to pending court ruling</figcaption>
+</figure>
+
+<section class="fade-in">
+  <blockquote>
+    If the government can blacklist a company and claim it's a security risk over a contract disagreement, the procurement system becomes contingent on political favor rather than the rule of law.
+    <cite>- Tech industry amicus brief filed March 16, 2026</cite>
+  </blockquote>
+  <p>Major tech industry trade groups filed amicus briefs making the point that the stakes go well beyond Anthropic. The Pentagon's Undersecretary Emil Michael said the department is looking to fully replace Anthropic, and a court hearing on whether to grant temporary relief was scheduled for March 24.</p>
+  <p>On March 26, U.S. District Judge Rita F. Lin issued a stinging 43-page ruling granting Anthropic a preliminary injunction, blocking the government from enforcing its ban and the supply chain risk designation.</p>
+  <blockquote>
+    Nothing in the governing statute supports the Orwellian notion that an American company may be branded a potential adversary and saboteur of the U.S. for expressing disagreement with the government.
+    <cite>- Judge Rita F. Lin, U.S. District Court, Northern District of California</cite>
+  </blockquote>
+</section>
+
+<!-- ── Industry Solidarity ────────────────────── -->
+<section class="fade-in">
+  <span class="section-label">Industry Solidarity</span>
+  <h2>"We Will Not Be Divided"</h2>
+  <p>One factor that complicated the Pentagon's strategy was the AI workforce. More than 300 Google employees and over 60 OpenAI employees signed an open letter titled "We Will Not Be Divided," which called on their companies to hold the same red lines as Anthropic. The letter argued that the Pentagon was deliberately trying to split the industry - making each company afraid the others would cave.</p>
+  <p>Google DeepMind Chief Scientist Jeff Dean posted on X that mass surveillance violates the Fourth Amendment. Sam Altman said publicly that he didn't think the Defense Production Act should be used against AI companies. The concerns Anthropic raised were not just one company's position - they were shared across the AI workforce.</p>
+  <p>But how durable is this solidarity? As AI policy expert Hamid Ekbia of Syracuse University points out, in a tighter job market employees may not feel as safe speaking out, which means this kind of cross-company pressure could be hard to sustain. He calls the AI industry's competitive environment a "moral economy of the jungle" where the most aggressive companies tend to win.</p>
+</section>
+
+<!-- ── International Context ──────────────────── -->
+<section class="fade-in">
+  <span class="section-label">International Context</span>
+  <h2>The World Already Agrees</h2>
+  <p>The question of whether AI should be allowed to autonomously select and kill targets is not something only Anthropic cares about. In December 2024, the UN General Assembly voted <strong>166 to 3</strong> in favor of a resolution supporting a framework to prohibit or regulate lethal autonomous weapons systems. The UN Secretary-General and the International Committee of the Red Cross have called for a binding treaty on autonomous weapons by the end of 2026.</p>
+  <p>The U.S. abstained. The three votes against came from Russia, Belarus, and North Korea. The visual below represents every vote cast. Each square is a nation. The green is overwhelming. The red is almost invisible.</p>
+</section>
+
+<figure class="graphic fade-in" role="figure" aria-label="UN General Assembly vote: 166 in favor, 3 against a framework for autonomous weapons regulation">
+  <div class="waffle-grid" id="waffle-chart"></div>
+  <div class="waffle-legend">
+    <span><i class="legend-swatch legend-yes"></i> In favor (166)</span>
+    <span><i class="legend-swatch legend-no"></i> Against (3)</span>
+  </div>
+  <figcaption>Figure 4 - UN General Assembly vote on lethal autonomous weapons framework, December 2024. 166 nations voted in favor; Russia, Belarus, and North Korea voted against. The U.S. abstained.</figcaption>
+</figure>
+
+<section class="fade-in">
+  <p>The U.S. has resisted a preemptive ban, but the overwhelming international support shows that Anthropic's insistence on human-in-the-loop requirements aligns with a broad global consensus - not some niche concern. If the U.S. participates in and eventually ratifies such a treaty, it would create a durable legal floor for the kind of restrictions Anthropic was advocating.</p>
+</section>
+
+<!-- ── Solutions ───────────────────────────────── -->
+<section class="fade-in">
+  <span class="section-label">Solutions</span>
+  <h2>What Needs to Change</h2>
+  <h3>1. Federal Legislation</h3>
+  <p>The fix that keeps coming up across every expert analysis is federal legislation, and it is hard to argue against. If Congress had set clear rules on autonomous weapons and surveillance, Anthropic would probably have been fine selling to the military, and none of this would have happened. Right now, the question of whether the Pentagon uses AI for mass surveillance depends entirely on who is running the Department of Defense at any given moment. Congress could pass legislation requiring judicial authorization for AI-driven domestic surveillance and mandating human oversight in any AI system involved in lethal targeting decisions. The Pentagon itself publicly said it was not interested in either of those use cases - writing them into law would take the pressure off individual companies.</p>
+
+  <h3>2. Industry Standards</h3>
+  <p>Legislation alone is not enough if individual companies can still be picked off one at a time. An industry-wide framework, modeled on the kind of professional standards that govern medicine or law, could make it much harder for the government to single out and punish one company for holding a line the entire industry agrees on. The challenge is that the competitive structure of the AI industry actively works against this kind of coordination - but the "We Will Not Be Divided" letter is evidence that at least the workforce wants to move in that direction.</p>
+
+  <h3>3. International Law</h3>
+  <p>The UN vote of 166-3 and the Secretary-General's call for a binding treaty by end of 2026 represent the strongest possible international mandate. If ratified, such a treaty would create protections far harder to undo than any single company's contract language, signaling to the defense industry that human oversight in weapons systems is not a negotiable preference but a legal requirement.</p>
+</section>
+
+<!-- ── Conclusion ──────────────────────────────── -->
+<section class="fade-in">
+  <span class="section-label">Conclusion</span>
+  <h2>Bigger Than One Company</h2>
+  <p>This dispute is bigger than one contract or one company. It is about who gets to decide the limits on how powerful AI systems are used by the government - and what happens when a company tries to draw those lines on its own. Anthropic took a massive financial hit because its leadership decided that the risks of unrestricted military AI were not acceptable. The company was then punished for that stance while a competitor got essentially the same protections by being less confrontational about it.</p>
+  <div class="pull-quote">The safety of these systems currently depends on the individual courage of whoever happens to be running an AI company at the time. That is not a sustainable model.</div>
+  <p>Congress needs to legislate clear boundaries. The AI industry needs collective commitments it cannot easily abandon under competitive pressure. The courts need to establish that the government cannot retaliate against companies for exercising their right to speak on AI safety. Until those structural changes are in place, the next version of this crisis is just a matter of time.</p>
+</section>
+
+<!-- ── Sources ─────────────────────────────────── -->
+<section class="sources fade-in">
+  <span class="section-label">Sources</span>
+  <h2>References</h2>
+  <ol>
+    <li>Allyn, B. (2026, March 9). Anthropic sues the Trump administration over 'supply chain risk' label. <em>NPR.</em> <a href="https://www.npr.org/2026/03/09/nx-s1-5742548/anthropic-pentagon-lawsuit-amodai-hegseth" target="_blank" rel="noopener">npr.org</a></li>
+    <li>Amodei, D. (2026, February 26). Statement from Dario Amodei on our discussions with the Department of War. <em>Anthropic.</em> <a href="https://www.anthropic.com/news/statement-department-of-war" target="_blank" rel="noopener">anthropic.com</a></li>
+    <li>Anthropic. (2026, March 5). Where we stand on the Department of War. <em>Anthropic Blog.</em> <a href="https://www.anthropic.com/news/where-stand-department-war" target="_blank" rel="noopener">anthropic.com</a></li>
+    <li>Bethe, R., &amp; Iyer, K. (2026, February 24). Pentagon threatens to make Anthropic a pariah if it refuses to drop AI guardrails. <em>CNN.</em> <a href="https://www.cnn.com/2026/02/24/tech/hegseth-anthropic-ai-military-amodei" target="_blank" rel="noopener">cnn.com</a></li>
+    <li>Fried, I. (2026, March 16). Tech firms back Anthropic in Pentagon lawsuit. <em>Axios.</em> <a href="https://www.axios.com/2026/03/16/tech-industry-rallies-anthropic-pentagon-fight" target="_blank" rel="noopener">axios.com</a></li>
+    <li>Munoz, C. (2026, March 13). Anthropic-Pentagon dispute reveals limits of AI self-regulation, expert says. <em>Syracuse University Today.</em> <a href="https://news.syr.edu/2026/03/13/anthropic-pentagon-ai-self-regulation/" target="_blank" rel="noopener">news.syr.edu</a></li>
+    <li>OpenAI. (2026, February 28). Our agreement with the Department of War. <em>OpenAI Blog.</em> <a href="https://openai.com/index/our-agreement-with-the-department-of-war/" target="_blank" rel="noopener">openai.com</a></li>
+    <li>Perrin, B. (2025, January 24). Lethal autonomous weapons systems and international law. <em>ASIL Insights, 29</em>(1). <a href="https://www.asil.org/insights/volume/29/issue/1" target="_blank" rel="noopener">asil.org</a></li>
+    <li>Rozenshtein, A. Z. (2026, February 25). What the Defense Production Act can and can't do to Anthropic. <em>Lawfare.</em> <a href="https://www.lawfaremedia.org/article/what-the-defense-production-act-can-and-cant-do-to-anthropic" target="_blank" rel="noopener">lawfaremedia.org</a></li>
+    <li>Silberling, A. (2026, February 27). Employees at Google and OpenAI support Anthropic's Pentagon stand in open letter. <em>TechCrunch.</em> <a href="https://techcrunch.com/2026/02/27/employees-at-google-and-openai-support-anthropics-pentagon-stand-in-open-letter/" target="_blank" rel="noopener">techcrunch.com</a></li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <p>An editorial project for Advanced Writing &middot; Northeastern University &middot; 2026</p>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+     ════════════════════════════════════════════ -->
+<script>
+/* ── Dark Mode ─────────────────────────────────── */
+(function(){
+  const btn = document.querySelector('.dm-toggle');
+  const saved = localStorage.getItem('dm');
+  if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme:dark)').matches)){
+    document.documentElement.classList.add('dark');
+    btn.textContent = '🌙';
+  }
+  btn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    const dark = document.documentElement.classList.contains('dark');
+    btn.textContent = dark ? '🌙' : '☀️';
+    localStorage.setItem('dm', dark ? 'dark' : 'light');
+  });
+})();
+
+/* ── Reading Progress Bar ──────────────────────── */
+(function(){
+  const bar = document.querySelector('.progress-bar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }, {passive:true});
+})();
+
+/* ── Scroll Fade-In ────────────────────────────── */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, {threshold:0.12});
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+})();
+
+/* ═══════════════════════════════════════════════
+   FIGURE 1 - TIMELINE
+   ═══════════════════════════════════════════════ */
+(function(){
+  const events = [
+    {
+      date: 'Feb 24', actor: 'pentagon',
+      title: 'Hegseth Delivers Ultimatum',
+      summary: 'Defense Secretary calls Amodei to Pentagon; demands all restrictions dropped by Friday 5:01 PM.',
+      detail: 'The meeting marked the first time the DPA was explicitly threatened against a U.S. AI company. The "supply chain risk" label was also raised as a consequence - a designation normally reserved for foreign adversaries.'
+    },
+    {
+      date: 'Feb 25', actor: 'other',
+      title: 'Lawfare Legal Analysis Published',
+      summary: 'Rozenshtein publishes detailed analysis of DPA\'s applicability to AI software disputes.',
+      detail: 'He draws a key distinction: forcing Anthropic to drop contractual restrictions is legally ambiguous, but forcing the company to retrain its model would be "demanding a product the company doesn\'t make."'
+    },
+    {
+      date: 'Feb 26', actor: 'anthropic',
+      title: 'Amodei\'s Public Statement',
+      summary: 'Anthropic CEO publicly lays out two red lines: no mass surveillance, no autonomous weapons.',
+      detail: 'Amodei argued AI can take scattered commercial data and "automatically assemble it into a detailed profile of any individual at massive scale." On weapons, he said frontier models are not reliable enough for life-or-death decisions.'
+    },
+    {
+      date: 'Feb 27', actor: 'pentagon',
+      title: 'Contract Canceled, Anthropic Blacklisted',
+      summary: 'Pentagon cancels $200M contract; designates Anthropic a "supply chain risk"; all agencies ordered to stop using Anthropic products.',
+      detail: 'The supply chain risk label is typically used against companies tied to adversarial nations. Using it against an American AI company was unprecedented and shocked the industry.'
+    },
+    {
+      date: 'Feb 28', actor: 'openai',
+      title: 'OpenAI Signs Pentagon Deal',
+      summary: 'OpenAI announces classified-network contract with the same core prohibitions Anthropic was punished for.',
+      detail: 'OpenAI\'s deal includes bans on mass domestic surveillance, autonomous weapons, and social credit systems. OpenAI says it asked the Pentagon to extend the same terms to all labs. Altman later called the timing "opportunistic and sloppy."'
+    },
+    {
+      date: 'Feb 27', actor: 'industry',
+      title: '"We Will Not Be Divided" Letter',
+      summary: '300+ Google and 60+ OpenAI employees sign open letter backing Anthropic\'s red lines.',
+      detail: 'Jeff Dean of Google DeepMind posted that mass surveillance violates the Fourth Amendment. The letter argued the Pentagon was deliberately trying to split the industry so each company would cave individually.'
+    },
+    {
+      date: 'Mar 5', actor: 'anthropic',
+      title: 'Anthropic Responds to Blacklisting',
+      summary: 'Amodei clarifies the supply chain label\'s scope and announces intent to challenge it in court.',
+      detail: 'He noted the label applies narrowly to Pentagon-contract work, not all defense contractor relationships. He also apologized for the tone of a leaked Slack post criticizing OpenAI\'s deal.'
+    },
+    {
+      date: 'Mar 9', actor: 'anthropic',
+      title: 'Two Federal Lawsuits Filed',
+      summary: 'Anthropic sues in San Francisco and D.C. Circuit, alleging First Amendment retaliation.',
+      detail: 'The suits argue the supply chain risk label was punishment for Anthropic\'s protected speech on AI safety, not a legitimate national security determination. The lawsuits seek to stop the government from blacklisting companies over policy disagreements.'
+    },
+    {
+      date: 'Mar 16–26', actor: 'court',
+      title: 'Court Rules: "Orwellian" Retaliation',
+      summary: 'After amicus briefs and a March 24 hearing, Judge Rita F. Lin issues a 43-page ruling granting Anthropic a preliminary injunction.',
+      detail: 'The judge wrote: "Nothing in the governing statute supports the Orwellian notion that an American company may be branded a potential adversary and saboteur of the U.S. for expressing disagreement with the government." The ruling blocked the government from enforcing the supply chain risk designation.'
+    }
+  ];
+
+  const actorColors = {
+    pentagon: 'var(--pentagon)', anthropic: 'var(--anthropic)',
+    openai: 'var(--openai)', court: 'var(--court)',
+    industry: 'var(--industry)', other: 'var(--text-secondary)'
+  };
+
+  const container = document.getElementById('timeline');
+
+  events.forEach((ev, i) => {
+    const left = i % 2 === 0;
+    const div = document.createElement('div');
+    div.className = 'tl-event fade-in';
+    div.innerHTML = `
+      <div class="${left ? 'tl-content-left' : ''}" ${left ? '' : 'style="display:none"'}>
+        ${left ? `
+          <div class="tl-date">${ev.date}</div>
+          <div class="tl-title">${ev.title}</div>
+          <div class="tl-summary">${ev.summary}</div>
+          <div class="tl-detail">${ev.detail}</div>
+          <button class="tl-toggle" aria-expanded="false">Read more</button>
+        ` : ''}
+      </div>
+      <div class="tl-spine">
+        <div class="tl-dot" style="color:${actorColors[ev.actor]}"></div>
+      </div>
+      <div class="${left ? '' : 'tl-content-right'}">
+        ${!left ? `
+          <div class="tl-date">${ev.date}</div>
+          <div class="tl-title">${ev.title}</div>
+          <div class="tl-summary">${ev.summary}</div>
+          <div class="tl-detail">${ev.detail}</div>
+          <button class="tl-toggle" aria-expanded="false">Read more</button>
+        ` : ''}
+      </div>
+    `;
+    container.appendChild(div);
+
+    const btn = div.querySelector('.tl-toggle');
+    btn.addEventListener('click', () => {
+      const open = div.classList.toggle('open');
+      btn.textContent = open ? 'Show less' : 'Read more';
+      btn.setAttribute('aria-expanded', open);
+    });
+  });
+
+  /* Observe timeline events for fade-in */
+  if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, {threshold:0.1});
+    container.querySelectorAll('.tl-event').forEach(el => obs.observe(el));
+  } else {
+    container.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+  }
+})();
+
+/* ═══════════════════════════════════════════════
+   FIGURE 2 - COMPARISON PANEL (Reveal Overlap)
+   ═══════════════════════════════════════════════ */
+(function(){
+  const btn = document.getElementById('reveal-btn');
+  let revealed = false;
+  btn.addEventListener('click', () => {
+    revealed = !revealed;
+    const items = document.querySelectorAll('#compare-panel li[data-match]');
+    items.forEach(li => li.classList.toggle('highlighted', revealed));
+    btn.textContent = revealed ? 'Hide Overlap' : 'Reveal the Overlap';
+  });
+})();
+
+/* ═══════════════════════════════════════════════
+   FIGURE 4 - WAFFLE CHART
+   ═══════════════════════════════════════════════ */
+(function(){
+  const yesCountries = [
+    'Afghanistan','Albania','Algeria','Andorra','Angola','Antigua & Barbuda',
+    'Argentina','Armenia','Australia','Austria','Bahamas','Bahrain','Bangladesh',
+    'Barbados','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia & Herzegovina',
+    'Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde',
+    'Cambodia','Cameroon','Canada','Central African Rep.','Chad','Chile','China',
+    'Colombia','Comoros','Congo','Costa Rica','Croatia','Cuba','Cyprus',
+    'Czech Republic','DR Congo','Denmark','Djibouti','Dominica','Dominican Rep.',
+    'Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia',
+    'Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia',
+    'Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau',
+    'Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran',
+    'Iraq','Ireland','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya',
+    'Kiribati','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia',
+    'Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia',
+    'Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico',
+    'Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique',
+    'Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua',
+    'Niger','Nigeria','North Macedonia','Norway','Oman','Pakistan','Palau','Panama',
+    'Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar',
+    'Romania','Rwanda','Samoa','San Marino','São Tomé & Príncipe','Saudi Arabia',
+    'Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia',
+    'Solomon Islands','Somalia','South Africa','South Korea','Spain','Sri Lanka',
+    'St. Kitts & Nevis','St. Lucia','St. Vincent','Sudan','Suriname','Sweden',
+    'Switzerland','Syria','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo',
+    'Tonga','Trinidad & Tobago','Tunisia','Türkiye','Turkmenistan','Tuvalu','Uganda',
+    'Ukraine','UAE','United Kingdom','Uruguay','Uzbekistan','Vanuatu','Venezuela',
+    'Vietnam','Yemen','Zambia','Zimbabwe'
+  ];
+  const noCountries = ['Russia','Belarus','North Korea'];
+
+  const grid = document.getElementById('waffle-chart');
+
+  /* Render 166 green cells + 3 red cells = 169 = 13×13 */
+  yesCountries.slice(0, 166).forEach(name => {
+    const cell = document.createElement('div');
+    cell.className = 'waffle-cell vote-yes';
+    cell.innerHTML = `<span class="waffle-tooltip">${name}</span>`;
+    grid.appendChild(cell);
+  });
+  noCountries.forEach(name => {
+    const cell = document.createElement('div');
+    cell.className = 'waffle-cell vote-no';
+    cell.innerHTML = `<span class="waffle-tooltip">${name}</span>`;
+    grid.appendChild(cell);
+  });
+})();
+</script>
+</body>
+</html>
