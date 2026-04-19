@@ -262,8 +262,9 @@ blockquote cite{
 .fc-label{font-size:12.5px;font-weight:700;fill:#000;pointer-events:none}
 .fc-sublabel{font-size:11px;font-weight:600;fill:#000;pointer-events:none}
 .dark .fc-bg{fill:#1e293b}
-.dark .fc-label{fill:#e2e8f0}
-.dark .fc-sublabel{fill:#cbd5e1}
+.dark .fc-label{fill:#000}
+.dark .fc-sublabel{fill:#000}
+.dark .fc-legend{fill:#e2e8f0}
 .dark .fc-node{opacity:.85}
 .fc-arrow{fill:none;stroke-width:2;stroke-dasharray:6 4}
 @media(prefers-reduced-motion:no-preference){
@@ -490,13 +491,13 @@ footer{
 
       <!-- Legend -->
       <circle cx="30" cy="235" r="5" fill="var(--pentagon)"/>
-      <text class="fc-sublabel" x="42" y="239">Pentagon action</text>
+      <text class="fc-sublabel fc-legend" x="42" y="239">Pentagon action</text>
       <circle cx="170" cy="235" r="5" fill="var(--anthropic)"/>
-      <text class="fc-sublabel" x="182" y="239">Anthropic action</text>
+      <text class="fc-sublabel fc-legend" x="182" y="239">Anthropic action</text>
       <circle cx="310" cy="235" r="5" fill="var(--industry)"/>
-      <text class="fc-sublabel" x="322" y="239">Industry support</text>
+      <text class="fc-sublabel fc-legend" x="322" y="239">Industry support</text>
       <circle cx="440" cy="235" r="5" fill="var(--court)"/>
-      <text class="fc-sublabel" x="452" y="239">Court proceedings</text>
+      <text class="fc-sublabel fc-legend" x="452" y="239">Court proceedings</text>
     </svg>
   </div>
   <figcaption>Figure 3 - Legal pathway from Pentagon threat to pending court ruling</figcaption>
