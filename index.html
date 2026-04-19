@@ -144,6 +144,10 @@ blockquote cite{
 @media(prefers-reduced-motion:reduce){
   .fade-in{opacity:1;transform:none;transition:none}
 }
+@media print{
+  .fade-in{opacity:1!important;transform:none!important}
+  .progress-bar,.dm-toggle,.skip-link{display:none}
+}
 
 /* ═══════════════════════════════════════════════
    FIGURE 1 - TIMELINE
